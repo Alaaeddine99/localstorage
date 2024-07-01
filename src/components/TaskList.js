@@ -6,13 +6,19 @@ import TaskItem from './TaskItem'
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [taskToEdit, setTaskToEdit] = useState(null);
+  const [counter, setCounter] = useState(0)
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     setTasks(storedTasks);
+    setCounter(1);
   }, []);
+ 
 
   useEffect(() => {
+    if (counter === 0) {
+      return
+    }
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
@@ -38,6 +44,7 @@ const TaskList = () => {
   const editTask = (task) => {
     setTaskToEdit(task);
   };
+  
 
   return (
     <div className="task-list">
